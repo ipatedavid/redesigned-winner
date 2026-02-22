@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gamehub-deployment
+  namespace: redesigned-winner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gamehub-server
+  template:
+    metadata:
+      labels:
+        app: gamehub-server
+    spec:
+      containers:
+      - name: nginx
+        image: docker.io/ipatedavid/redesigned-winner:latest
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: dockerhub-creds
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: gamehub-service
+  namespace: redesigned-winner
+spec:
+  type: NodePort
+  selector:
+    app: gamehub-server
+  ports:
+    - protocol: TCP
+      port: 80          # Service port inside cluster
+      targetPort: 80    # Container port
+      nodePort: 30333   # External port on the node (must be 30000–32767)
+
