@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: docker.io/ipatedavid/redesigned-winner:latest
+        image: docker.io/ipatedavid/redesigned-winner:main
         ports:
         - containerPort: 80
       imagePullSecrets:
