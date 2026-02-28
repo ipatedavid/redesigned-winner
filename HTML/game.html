@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game Hub - Joacă</title>
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <style>
         body {
             background-color: #0f0f0f;
@@ -21,16 +23,22 @@
             font-weight: 600;
             color: #fff !important;
         }
-        .dosbox-frame {
-            width: 100%;
-            max-width: 800px;
-            height: 500px;
-            margin: 0 auto;
-            border: 1px solid #444;
-            border-radius: 8px;
-            overflow: hidden;
-            background-color: #000;
-        }
+    .dos-container {
+    width: 800px;   /* dimensiunea implicită a jocului pe PC */
+    height: 500px;  /* înălțimea implicită */
+    margin: 0 auto;
+    border: 1px solid #444;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: black;
+    position: relative;
+}
+
+.dos-container canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
         .game-info {
             margin-top: 20px;
         }
@@ -112,29 +120,6 @@
                         <h2>4D Prince of Persia</h2>
                         <p>O versiune specială a clasicului Prince of Persia (1994).</p>
                     </div>
-
-                    <!-- Frame cu DOS Wasm X -->
-                    <iframe src="doswasmx/dist/index.html" 
-                            class="dosbox-frame"
-                            allow="fullscreen">
-                    </iframe>
-
-                    <!-- Instrucțiuni pentru utilizator -->
-                    <div class="instructions">
-                        <i class="fa-solid fa-info-circle me-2" style="color: #ff8c42;"></i>
-                        <strong>Cum rulezi jocul:</strong>
-                        <ol class="mt-2 mb-0">
-                            <li>Apasă butonul <strong>"Choose File"</strong> în partea dreaptă sus a emulatorului.</li>
-                            <li>Selectează fișierul <strong><code>4d_prince_of_persia.zip</code></strong> de pe calculator (arhiva pe care ai descărcat-o).</li>
-                            <li>După ce se încarcă, în fereastra neagră tastează următoarele comenzi (apăsând Enter după fiecare):<br>
-                                <code>c:</code><br>
-                                <code>cd 4DPRIN</code><br>
-                                <code>cd 4DPOP-~1</code><br>
-                                <code>4DPRIN.EXE</code>
-                            </li>
-                            <li>Jocul va porni. Dacă rulează prea repede sau încet, ajustează viteza cu <strong>Ctrl+F11</strong> (mai încet) și <strong>Ctrl+F12</strong> (mai repede).</li>
-                        </ol>
-                    </div>
                 </div>
             </div>
         </div>
@@ -148,39 +133,8 @@
         </div>
     </div>
 
-    <!-- Script pentru recomandări -->
-    <script>
-        document.addEventListener('DOMContentLoaded', async function() {
-            const recList = document.getElementById('recommendations-list');
-            if (!recList) return;
-
-            try {
-                const response = await fetch('data/games.json');
-                const games = await response.json();
-                
-                // Recomandări (exclude jocul curent - id=5)
-                const recommendations = games.filter(g => g.id != 5).slice(0, 4);
-                
-                let html = '';
-                recommendations.forEach(game => {
-                    html += `
-                        <div class="col">
-                            <div class="card h-100">
-                                <img src="${game.thumbnail || 'https://via.placeholder.com/300x180?text=Game+Hub'}" class="card-img-top" alt="${game.title}">
-                                <div class="card-body d-flex flex-column">
-                                    <h5 class="card-title">${game.title}</h5>
-                                    <p class="card-text flex-grow-1">${game.description || ''}</p>
-                                    <a href="game.html?id=${game.id}" class="btn btn-outline-warning mt-2">Joacă</a>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                });
-                recList.innerHTML = html;
-            } catch (error) {
-                console.error('Eroare la încărcarea recomandărilor:', error);
-            }
-        });
-    </script>
+    <!-- JS DosBox și joc -->
+    <script src="https://js-dos.com/6.22/current/js-dos.js"></script>
+    <script src="js/game.js"></script>
 </body>
 </html>
