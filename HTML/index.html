@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Hub - Arhivă Abandonware</title>
+
+    <!-- Bootstrap pentru layout -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Iconițe (play, search, etc.) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* Stil general pagină */
+        body {
+            background: #0a0c0f;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        /* Bara de sus */
+        .navbar {
+            background: rgba(20, 22, 27, 0.95) !important;
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid #2c2f36;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        /* Logo / titlu navbar */
+        .navbar-brand {
+            font-weight: 600;
+            color: #fff !important;
+            letter-spacing: 0.5px;
+        }
+
+        /* Sidebar stânga */
+        .sidebar {
+            background: #16181f;
+            border-radius: 16px;
+            padding: 1.2rem 0.8rem;
+            border: 1px solid #2c2f36;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        /* Elementele din sidebar */
+        .sidebar .list-unstyled li {
+            padding: 10px 16px;
+            border-radius: 12px;
+            color: #b0b3b8;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        /* Hover pe sidebar */
+        .sidebar .list-unstyled li:hover {
+            background: #2c2f36;
+            color: #fff;
+            transform: translateX(5px);
+        }
+
+        /* Iconițe din sidebar */
+        .sidebar .list-unstyled li i {
+            width: 24px;
+            color: #ff8c42;
+        }
+
+        /* Container pentru search */
+        .search-wrapper {
+            background: #1e2128;
+            border-radius: 40px;
+            padding: 4px 4px 4px 20px;
+            border: 1px solid #333842;
+            transition: all 0.2s;
+        }
+
+        /* Evidențiere search la focus */
+        .search-wrapper:focus-within {
+            border-color: #ff8c42;
+            box-shadow: 0 0 0 3px rgba(255, 140, 66, 0.2);
+        }
+
+        /* Inputul de căutare */
+        .search-wrapper input {
+            background: transparent;
+            border: none;
+            color: #fff;
+            outline: none;
+            width: 220px;
+            padding: 8px 0;
+        }
+
+        /* Placeholder input */
+        .search-wrapper input::placeholder {
+            color: #7e8596;
+            font-weight: 300;
+        }
+
+        /* Butonul de căutare */
+        .search-wrapper button {
+            background: #ff8c42;
+            border: none;
+            border-radius: 40px;
+            padding: 8px 22px;
+            color: #000;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        /* Hover pe buton search */
+        .search-wrapper button:hover {
+            background: #ffa25b;
+            transform: scale(1.02);
+        }
+
+        /* Card joc */
+        .game-card {
+            background: #1a1d26;
+            border: 1px solid #2c2f36;
+            border-radius: 24px;
+            overflow: hidden;
+            transition: transform 0.25s ease, box-shadow 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Efect hover card */
+        .game-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 25px -10px rgba(0,0,0,0.8), 0 0 0 1px #ff8c42 inset;
+            border-color: #ff8c42;
+        }
+
+        /* Imagine joc */
+        .game-card .card-img-top {
+            height: 160px;
+            object-fit: cover;
+            background: #0f1117;
+        }
+
+        /* Conținut card */
+        .game-card .card-body {
+            padding: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        /* Titlu joc */
+        .game-card .card-title {
+            color: #fff;
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Descriere joc */
+        .game-card .card-text {
+            color: #9ca3af;
+            font-size: 0.9rem;
+            flex-grow: 1;
+        }
+
+        /* Butonul Joacă */
+        .btn-play {
+            background: transparent;
+            border: 2px solid #ff8c42;
+            border-radius: 40px;
+            color: #ff8c42;
+            font-weight: 600;
+            padding: 8px 0;
+            transition: 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.85rem;
+            width: 100%;
+        }
+
+        /* Hover buton Joacă */
+        .btn-play:hover {
+            background: #ff8c42;
+            color: #0a0c0f;
+            border-color: #ff8c42;
+        }
+
+        /* Card pentru jocuri recente */
+        .recent-card {
+            background: #1a1d26;
+            border: 1px solid #2c2f36;
+            border-radius: 16px;
+            transition: transform 0.2s, border-color 0.2s;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        /* Hover card recent */
+        .recent-card:hover {
+            transform: translateY(-4px);
+            border-color: #ff8c42;
+        }
+
+        /* Conținut card recent */
+        .recent-card .card-body {
+            padding: 0.8rem;
+        }
+
+        /* Titlu recent */
+        .recent-card .card-title {
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Text recent */
+        .recent-card .card-text {
+            color: #9ca3af;
+            font-size: 0.75rem;
+        }
+
+        /* Buton mic Joacă (recent) */
+        .recent-card .btn-sm {
+            background: transparent;
+            border: 1px solid #ff8c42;
+            border-radius: 20px;
+            color: #ff8c42;
+            font-size: 0.7rem;
+            padding: 4px 10px;
+        }
+
+        /* Hover buton mic */
+        .recent-card .btn-sm:hover {
+            background: #ff8c42;
+            color: #0a0c0f;
+        }
+
+        /* Titluri de secțiuni */
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #fff;
+            border-left: 4px solid #ff8c42;
+            padding-left: 1rem;
+        }
+
+        /* Placeholder pentru imagini lipsă */
+        .placeholder-img {
+            width: 100%;
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0f1117;
+            color: #3a3f4b;
+        }
+
+        /* Scrollbar custom */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #16181f;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #3a3f4b;
+            border-radius: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff8c42;
+        }
+
+        /* Container spinner încărcare */
+        .spinner-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 300px;
+            grid-column: 1 / -1;
+        }
+
+        /* Spinner loading */
+        .lds-dual-ring {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+        }
+
+        /* Cerc animat */
+        .lds-dual-ring:after {
+            content: " ";
+            display: block;
+            width: 48px;
+            height: 48px;
+            margin: 8px;
+            border-radius: 50%;
+            border: 5px solid #ff8c42;
+            border-color: #ff8c42 transparent #ff8c42 transparent;
+            animation: lds-dual-ring 1.2s linear infinite;
+        }
+
+        /* Animația spinner */
+        @keyframes lds-dual-ring {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+
+<body data-bs-theme="dark">
+
+<!-- Navbar principal -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">
+            <i class="fa-solid fa-gamepad me-2" style="color: #ff8c42;"></i>Game Hub
+        </a>
+
+        <!-- Căutare joc -->
+        <div class="d-flex">
+            <div class="search-wrapper d-flex align-items-center">
+                <input type="text" id="searchInput" placeholder="Caută un joc...">
+                <button id="searchBtn">
+                    <i class="fa-solid fa-search me-1"></i> Caută
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid mt-4">
+    <div class="row">
+
+        <!-- Meniu lateral -->
+        <div class="col-lg-2 col-md-3 mb-4">
+            <div class="sidebar">
+                <ul class="list-unstyled">
+                    <li id="btn-home" class="mb-2">
+                        <i class="fa-solid fa-house me-2"></i> Acasă
+                    </li>
+                    <li id="btn-explore" class="mb-2">
+                        <i class="fa-solid fa-compass me-2"></i> Explorare
+                    </li>
+                    <li id="btn-recent" class="mb-2">
+                        <i class="fa-solid fa-clock me-2"></i> Recente
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Zona principală -->
+        <div class="col-lg-10 col-md-9">
+
+            <!-- Jocuri jucate recent -->
+            <div id="recent-section" style="display: none;" class="mb-5">
+                <h2 class="section-title">
+                    <i class="fa-regular fa-clock me-2"></i>Jucate recent
+                </h2>
+                <div class="row row-cols-2 row-cols-md-4 g-3" id="recent-games-container"></div>
+            </div>
+
+            <!-- Lista tuturor jocurilor -->
+            <h2 class="section-title">
+                <i class="fa-solid fa-crown me-2"></i>Toate jocurile
+            </h2>
+
+            <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-4" id="game-cards-container">
+                <div class="spinner-container">
+                    <div class="lds-dual-ring"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", async () => {
+
+        // Containerul de carduri
+        const container = document.getElementById("game-cards-container");
+
+        // Elemente pentru search
+        const searchInput = document.getElementById("searchInput");
+        const searchBtn = document.getElementById("searchBtn");
+
+        // Container pentru jocuri recente
+        const recentContainer = document.getElementById("recent-games-container");
+        const recentSection = document.getElementById("recent-section");
+
+        // Lista completă de jocuri
+        let allGames = [];
+
+        try {
+            // Cere lista de jocuri de la server
+            const response = await fetch("/api/games");
+            allGames = await response.json();
+
+            // Dacă nu există jocuri
+            if (!allGames.length) {
+                container.innerHTML =
+                    "<p class='text-center text-muted'>Nu există jocuri momentan.</p>";
+                return;
+            }
+
+            renderGames(allGames);
+            loadRecentGames();
+
+        } catch (e) {
+            // Eroare la încărcare
+            console.error(e);
+            container.innerHTML =
+                "<p class='text-danger text-center'><i class='fa-solid fa-triangle-exclamation me-2'></i>Eroare la încărcare.</p>";
+        }
+
+        // Construiește cardurile pentru jocuri
+        function renderGames(gamesArray) {
+
+            if (!gamesArray.length) {
+                container.innerHTML =
+                    "<p class='text-center text-muted'>Niciun joc nu corespunde căutării.</p>";
+                return;
+            }
+
+            let html = "";
+
+            gamesArray.forEach(game => {
+
+                // Taie descrierea la max 80 caractere
+                const description = game.description
+                    ? game.description.length > 80
+                        ? game.description.substring(0, 80) + "…"
+                        : game.description
+                    : '<span class="fst-italic text-muted">Description not found</span>';
+
+                // Imagine joc sau placeholder
+                const imageHtml = game.imageUrl
+                    ? `<img src="${game.imageUrl}" class="card-img-top" alt="${game.title}">`
+                    : `<div class="placeholder-img"><i class="fa-solid fa-image fa-3x"></i></div>`;
+
+                html += `
+                <div class="col">
+                    <div class="game-card">
+                        ${imageHtml}
+                        <div class="card-body">
+                            <h5 class="card-title">${escapeHtml(game.title)}</h5>
+                            <p class="card-text">${description}</p>
+                            <a href="game.html?id=${game.id}" class="btn btn-play mt-auto">
+                                <i class="fa-regular fa-circle-play me-2"></i>Joacă
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // Încarcă jocurile recente din localStorage
+        function loadRecentGames() {
+
+            const recent = JSON.parse(localStorage.getItem("recentGames")) || [];
+
+            if (recent.length === 0) {
+                recentSection.style.display = "none";
+                return;
+            }
+
+            recentSection.style.display = "block";
+
+            let html = "";
+
+            recent.forEach(game => {
+
+                // Imagine recent sau placeholder SVG
+                const imgSrc = game.imageUrl || 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22150%22%20height%3D%22120%22%20viewBox%3D%220%200%20150%20120%22%3E%3Crect%20width%3D%22150%22%20height%3D%22120%22%20fill%3D%22%232c2f36%22%2F%3E%3Ctext%20x%3D%2275%22%20y%3D%2260%22%20fill%3D%22%239ca3af%22%20font-size%3D%2212%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3ENo image%3C%2Ftext%3E%3C%2Fsvg%3E';
+
+                html += `
+                <div class="col">
+                    <div class="recent-card">
+                        <img src="${imgSrc}" class="card-img-top" alt="${game.title}" style="height: 120px; object-fit: cover;">
+                        <div class="card-body">
+                            <h6 class="card-title">${escapeHtml(game.title)}</h6>
+                            <a href="game.html?id=${game.id}" class="btn btn-sm btn-play mt-2">Joacă</a>
+                        </div>
+                    </div>
+                </div>
+                `;
+            });
+
+            recentContainer.innerHTML = html;
+        }
+
+        // Escape pentru XSS în titlu
+        function escapeHtml(unsafe) {
+            return unsafe.replace(/[&<>"']/g, function(m) {
+                if (m === "&") return "&amp;";
+                if (m === "<") return "&lt;";
+                if (m === ">") return "&gt;";
+                if (m === '"') return "&quot;";
+                if (m === "'") return "&#039;";
+                return m;
+            });
+        }
+
+        // Filtrare jocuri după text
+        function filterGames() {
+            const term = searchInput.value.trim().toLowerCase();
+
+            if (term === "") {
+                renderGames(allGames);
+            } else {
+                const filtered = allGames.filter(game =>
+                    game.title.toLowerCase().includes(term)
+                );
+                renderGames(filtered);
+            }
+        }
+
+        // Evenimente search
+        searchInput.addEventListener("input", filterGames);
+        searchBtn.addEventListener("click", filterGames);
+
+        // Scroll la început
+        document.getElementById("btn-home").addEventListener("click", () => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+
+        // Deschide un joc aleator
+        document.getElementById("btn-explore").addEventListener("click", () => {
+            if (allGames.length > 0) {
+                const randomIndex = Math.floor(Math.random() * allGames.length);
+                const randomGame = allGames[randomIndex];
+                location.href = `game.html?id=${randomGame.id}`;
+            } else {
+                alert("Nu există jocuri disponibile.");
+            }
+        });
+
+        // Scroll la secțiunea recent
+        document.getElementById("btn-recent").addEventListener("click", () => {
+            const recent = JSON.parse(localStorage.getItem("recentGames")) || [];
+            if (recent.length > 0) {
+                document.getElementById("recent-section")
+                    .scrollIntoView({ behavior: "smooth" });
+            } else {
+                alert("Nu ai jucat încă niciun joc.");
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

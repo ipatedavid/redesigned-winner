@@ -1,0 +1,86 @@
+
+{
+    MOD DE FUNCTIONARE!!!!!
+
+    "Codul™" se uita in server/imagine si cauta un folder numit "games" (daca arata alt fel nu il gaseste)
+
+    Dupa ce gaseste folderul, "Codul™", il deschide si incepe sa creeze carduri bazat pe folderele care le gaseste.
+    Ex:
+        -games
+            -joc1
+                -joc1.zip
+                -descriere.txt
+                -PFP.(".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp")
+            -joc2
+                -joc2.zip
+            
+        
+        "Codul™" va crea in index.html 2 carduri.
+         
+         Card 1:
+            -imagine
+            -titlu
+            -descriere
+            -buton joc.
+         
+         Card 2:
+            -Text cum ca nu a gasit imaginea
+            -titlu
+            -Text ca lipseste descriere
+            -buton joc.
+
+    Lucruri mai in detaliu pot fi gasite in comentarile din cod.
+}
+
+{
+    REGULA pentru ZIP (foarte important!!!)
+
+    Fiecare zip trebuie să conțină în rădăcină:
+
+    START.BAT
+
+    Exemplu:
+
+
+    doom.zip (inauntru lui trebuie sa existe)
+    ├─ START.BAT
+    └─ DOOM.EXE
+
+    START.BAT: (comenzile din .BAT)
+
+    DOOM.EXE
+
+    sau:
+
+    cd FOLDER
+    GAME.EXE
+}
+
+{
+    Câmpurile folosite de frontend sunt:
+
+    id
+
+    title
+
+    zip
+
+    (file e doar informativ pentru listă)
+}
+
+{
+    Modul in care testez serverul:
+
+    intru in terminal in VS Code.
+    (daca nu ai deja instalat ruleaza mai intai astea 2)
+    npm init -y
+    npm install express 
+
+    (dupa instalare ruleaza asta)
+    node server.js
+
+    apoi primesc o adresa aceasta arata de obicei asa:
+    Server pornit pe http://localhost:3000
+
+    Acesta este modalitatea in care testez local.
+}
