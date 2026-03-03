@@ -8,12 +8,7 @@ const PORT = 3000;
 // Folderul unde se află jocurile
 const GAMES_DIR = path.join(__dirname, "games");
 
-// Servește fișierele din proiect (html, css, js)
-app.use(express.static(__dirname));
-
-// Expune folderul games la /games
-app.use("/games", express.static(GAMES_DIR));
-
+// ✅ API routes FIRST
 app.get("/api/games", async (req, res) => {
     try {
         // Citește toate intrările din folderul games
@@ -79,6 +74,12 @@ app.get("/api/games", async (req, res) => {
         res.json([]);
     }
 });
+
+// Servește fișierele din proiect (html, css, js) - AFTER API
+app.use(express.static(__dirname));
+
+// Expune folderul games la /games - AFTER API
+app.use("/games", express.static(GAMES_DIR));
 
 // Pornește serverul
 app.listen(PORT, () => {
