@@ -12,7 +12,7 @@ RUN npm install
 COPY HTML/server.js .
 
 # Copy your HTML/CSS/JS frontend
-COPY HTML/ ./HTML/
+COPY HTML/ .
 
 EXPOSE 3000
 
