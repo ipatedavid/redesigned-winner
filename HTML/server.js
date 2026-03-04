@@ -9,7 +9,7 @@ const PORT = 3000;
 const GAMES_DIR = path.join(__dirname, "games");
 
 // API routes FIRST
-app.get("/games", async (req, res) => {
+app.get("/api/games", async (req, res) => {
     try {
         // Citește toate intrările din folderul games
         const entries = await fs.promises.readdir(GAMES_DIR, { withFileTypes: true });
@@ -86,3 +86,4 @@ app.listen(PORT, () => {
     console.log("Server pornit pe http://localhost:" + PORT);
 
 });
+
