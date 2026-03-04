@@ -3,13 +3,13 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Copy package files first
-COPY package*.json ./
+COPY HTML/package*.json ./
 
 # Install dependencies
 RUN npm install
 
 # Copy your server code
-COPY server.js .
+COPY HTML/server.js .
 
 # Copy your HTML/CSS/JS frontend
 COPY HTML/ ./HTML/
