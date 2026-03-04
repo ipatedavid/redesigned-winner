@@ -48,7 +48,7 @@ spec:
         - containerPort: 80
         volumeMounts:
         - name: games
-          mountPath: /usr/share/nginx/html/games
+          mountPath: /usr/share/nginx/html/
       imagePullSecrets:
       - name: dockerhub-creds
       volumes:
