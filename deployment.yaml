@@ -24,7 +24,7 @@ spec:
   resources:
     requests:
       storage: 5Gi
-  volumeName: nginx-pv
+  volumeName: game-library-pv
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -54,7 +54,7 @@ spec:
       volumes:
       - name: games
         persistentVolumeClaim:
-          claimName: nginx-pvc
+          claimName: game-library-pvc
 ---
 
 apiVersion: v1
