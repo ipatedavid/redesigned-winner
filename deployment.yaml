@@ -43,7 +43,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: docker.io/ipatedavid/redesigned-winner:sha-775c4fb
+        image: docker.io/ipatedavid/redesigned-winner:sha-0e02c9f
         ports:
         - containerPort: 80
         volumeMounts:
