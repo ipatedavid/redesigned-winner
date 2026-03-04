@@ -1,12 +1,19 @@
-FROM nginx:alpine
+FROM node:18-alpine
 
-# Remove default nginx content
-RUN rm -rf /usr/share/nginx/html/*
+WORKDIR /app
 
-# Copy our website
-COPY HTML/ /usr/share/nginx/html/
+# Copy package files first
+COPY package*.json ./
 
-EXPOSE 80
+# Install dependencies
+RUN npm install
 
-CMD ["nginx", "-g", "daemon off;"]
+# Copy your server code
+COPY server.js .
 
+# Copy your HTML/CSS/JS frontend
+COPY HTML/ ./HTML/
+
+EXPOSE 3000
+
+CMD ["node", "server.js"]
