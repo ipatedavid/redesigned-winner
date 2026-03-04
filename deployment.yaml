@@ -10,7 +10,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local-path
   hostPath:
-    path: /srv/redesigned-winner/
+    path: /srv/redesigned-winner/games
     type: DirectoryOrCreate
 ---
 apiVersion: v1
@@ -48,7 +48,7 @@ spec:
         - containerPort: 80
         volumeMounts:
         - name: games
-          mountPath: /usr/share/nginx/html/
+          mountPath: /usr/share/nginx/html/games
       imagePullSecrets:
       - name: dockerhub-creds
       volumes:
