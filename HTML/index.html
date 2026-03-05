@@ -314,6 +314,46 @@
     </style>
 </head>
 
+<script type="module">
+    import { auth } from './js/firebase-config.js';
+    import { onAuthStateChange, logout } from './js/auth.js';
+
+    const userSection = document.getElementById('user-section');
+
+    function updateUserSection(user) {
+        if (user) {
+            // Utilizator autentificat
+            userSection.innerHTML = `
+                <span class="text-light me-3">
+                    <i class="fa-regular fa-circle-user me-1"></i>${user.email}
+                </span>
+                <button class="btn btn-outline-secondary" id="logoutBtn">
+                    <i class="fa-solid fa-sign-out-alt me-2"></i>Logout
+                </button>
+            `;
+            document.getElementById('logoutBtn').addEventListener('click', async () => {
+                await logout();
+                // După logout, pagina se reîncarcă sau rămâne; onAuthStateChange va actualiza automat
+            });
+        } else {
+            // Utilizator neautentificat
+            userSection.innerHTML = `
+                <a href="login.html" class="btn btn-play me-2" style="width: auto; padding: 8px 20px;">
+    <i class="fa-solid fa-sign-in-alt me-2"></i>Login
+</a>
+                <a href="register.html" class="btn btn-play" style="width: auto; padding: 8px 20px;">
+                    <i class="fa-regular fa-circle-play me-2"></i>Register
+                </a>
+            `;
+        }
+    }
+
+    // Ascultă modificările stării de autentificare
+    onAuthStateChange((user) => {
+        updateUserSection(user);
+    });
+</script>
+
 <body data-bs-theme="dark">
 
 <!-- Navbar principal -->
@@ -323,14 +363,17 @@
             <i class="fa-solid fa-gamepad me-2" style="color: #ff8c42;"></i>Game Hub
         </a>
 
-        <!-- Căutare joc -->
+        <!-- Buton de căutare existent -->
         <div class="d-flex">
             <div class="search-wrapper d-flex align-items-center">
                 <input type="text" id="searchInput" placeholder="Caută un joc...">
-                <button id="searchBtn">
-                    <i class="fa-solid fa-search me-1"></i> Caută
-                </button>
+                <button id="searchBtn"><i class="fa-solid fa-search me-1"></i> Caută</button>
             </div>
+        </div>
+
+        <!-- Secțiunea de utilizator (dreapta) -->
+        <div class="d-flex align-items-center" id="user-section">
+            <!-- Aici va fi injectat dinamic conținutul -->
         </div>
     </div>
 </nav>

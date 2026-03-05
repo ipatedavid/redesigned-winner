@@ -96,7 +96,7 @@ function loadRecommended(allGames, currentGame) {
                     <div class="card-body d-flex flex-column">
                         <h6 class="card-title">${escapeHtml(game.title)}</h6>
                         <p class="card-text small flex-grow-1 text-muted">${escapeHtml(shortDesc)}</p>
-                        <a class="btn btn-sm btn-play mt-auto">
+                        <a href="game.html?id=${game.id}" class="btn btn-sm btn-play mt-auto">
                             <i class="fa-regular fa-circle-play me-2"></i>Joacă
                         </a>
                     </div>

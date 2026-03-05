@@ -84,3 +84,18 @@
 
     Acesta este modalitatea in care testez local.
 }
+
+{
+    A fost decisa adaugare de Register/Login
+
+    pentru aceasta am ales personal firebase in loc de oracle
+    motivele sunt multiple insa principalula fost simplicitatea.
+
+    bash commands pentru firebase:
+
+    npm install firebase
+    npm install -g firebase-tools (optional)
+    firebase login
+    firebase init
+    firebase deploy
+}
