@@ -17,15 +17,25 @@ The web app is served from a self-managed, bare-metal Kubernetes cluster running
 
 The website features integration with Firebase for accounts. 
 
-### Storage
+###  Storage
 
-The games library is stored in a single shared Google Drive folder. This is synchronized using a local-hosted runner that triggers rclone every 5 minutes and on commit to main branch.
+The games library is stored in a single shared Google Drive folder, synchronized to the cluster using a self-hosted Actions runner that triggers `rclone` every 5 minutes and on every commit to `main`.
 
-Note: After you set-up rclone for Google Drive, you might need to manually restrict its root folder. Just add the following line to the rclone config file, under the remote you created:
-root_folder_id = xxxxxxx *the ID to use here is the last part of the URL to your Drive folder* 
+#### Setting up rclone
 
-The local-hosted runner will need the correct permissions to write on the cluster local storage folder that is being used for the game library.
-When installing the runner on your cluster, make sure to install it with appropriate user priviledges.  
+After configuring rclone for Google Drive, you may need to manually restrict its root folder. Add the following line to your `rclone.conf` under the remote you created:
+```ini
+root_folder_id = YOUR_FOLDER_ID
+```
+
+> The folder ID is the last segment of your Google Drive folder URL:
+> `https://drive.google.com/drive/folders/`**`YOUR_FOLDER_ID`**
+
+#### Runner permissions
+
+The self-hosted runner requires write access to the cluster's local storage folder used for the game library. When installing the runner, ensure it runs under a user with appropriate permissions to that directory.
+
+See [GitHub's self-hosted runner docs](https://docs.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners) for installation instructions.
 
 --- 
 ```mermaid
