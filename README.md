@@ -37,17 +37,28 @@ The self-hosted runner requires write access to the cluster's local storage fold
 
 See [GitHub's self-hosted runner docs](https://docs.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners) for installation instructions.
 
---- 
+
+### Argo CD — Cluster-Scoped Resources
+
+If your Argo CD project is namespace-scoped, cluster-wide resources such as `PersistentVolume` objects will fail to deploy. To resolve this, add the relevant resource types to the project's **Cluster Resource Allow List** via the Argo CD UI or project manifest.
+
 ```mermaid
 flowchart TD
     A[Developer\ngit push] --> B[GitHub Actions\nbuild · tag · push]
     B --> C[Docker Hub\nprivate repo]
     B --> D[deployment.yaml\nimage tag updated]
     D --> E[Argo CD\nwatches repo]
-    E --> F[K3s Cluster]
-    F --> G[NodePort service]
+    E --> F[K3s Cluster · Bare Metal]
+    F --> G[NodePort Service]
     G --> H[Pod: game-hub]
-    H --> I[Browser/End User]
+    H --> I[Browser / End User]
+
+    J[Google Drive\nshared folder] -->|every 5 min / on push| K[Self-hosted Runner\nrclone sync]
+    K --> L[/srv/games\nPersistentVolume]
+    L --> H
+
+    I -->|login / accounts| M[Firebase Auth]
+    M -->|verified session| I
 ```
 
 ## Setup Notes
@@ -63,6 +74,3 @@ kubectl create secret docker-registry dockerhub-creds \
   --docker-email=YOUR_EMAIL
 ```
 
-### Argo CD — Cluster-Scoped Resources
-
-If your Argo CD project is namespace-scoped, cluster-wide resources such as `PersistentVolume` objects will fail to deploy. To resolve this, add the relevant resource types to the project's **Cluster Resource Allow List** via the Argo CD UI or project manifest.
