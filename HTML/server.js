@@ -8,7 +8,7 @@ const PORT = 3000;
 // Folderul unde se află jocurile
 const GAMES_DIR = path.join(__dirname, "games");
 
-// ✅ API routes FIRST
+// API route first
 app.get("/api/games", async (req, res) => {
     try {
         // Citește toate intrările din folderul games
@@ -84,4 +84,5 @@ app.use("/games", express.static(GAMES_DIR));
 // Pornește serverul
 app.listen(PORT, () => {
     console.log("Server pornit pe http://localhost:" + PORT);
+
 });
