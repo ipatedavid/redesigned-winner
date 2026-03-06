@@ -13,7 +13,21 @@ The web app is served from a self-managed, bare-metal Kubernetes cluster running
 - **CI:** GitHub Actions builds and versions a Docker image on every push to `main`, pushing the resulting artifact to a private Docker Hub repository and updating `deployment.yaml` with the new image tag.
 - **CD:** Argo CD continuously monitors the repository for manifest changes and automatically synchronises the cluster to the desired state.
 
----
+### Database
+
+The website features integration with Firebase for accounts. 
+
+### Storage
+
+The games library is stored in a single shared Google Drive folder. This is synchronized using a local-hosted runner that triggers rclone every 5 minutes and on commit to main branch.
+
+Note: After you set-up rclone for Google Drive, you might need to manually restrict its root folder. Just add the following line to the rclone config file, under the remote you created:
+root_folder_id = xxxxxxx *the ID to use here is the last part of the URL to your Drive folder* 
+
+The local-hosted runner will need the correct permissions to write on the cluster local storage folder that is being used for the game library.
+When installing the runner on your cluster, make sure to install it with appropriate user priviledges.  
+
+--- 
 ```mermaid
 flowchart TD
     A[Developer\ngit push] --> B[GitHub Actions\nbuild · tag · push]
