@@ -54,7 +54,7 @@ flowchart TD
     H --> I[Browser / End User]
 
     J[Google Drive\nshared folder] -->|every 5 min / on push| K[Self-hosted Runner\nrclone sync]
-    K --> L[/srv/games\nPersistentVolume]
+    K --> L["/srv/games PersistentVolume"]
     L --> H
 
     I -->|login / accounts| M[Firebase Auth]
