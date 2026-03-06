@@ -23,7 +23,7 @@ flowchart TD
     E --> F[K3s Cluster]
     F --> G[NodePort service]
     G --> H[Pod: game-hub]
-    H --> I[Browser (Local or Tailscale) / End User]
+    H --> I[Browser/End User]
 ```
 
 ## Setup Notes
