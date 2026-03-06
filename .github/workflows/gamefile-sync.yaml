@@ -1,0 +1,15 @@
+name: Sync games from Google Drive
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '*/5 * * * *'  # also polls every hour automatically
+
+jobs:
+  sync:
+    runs-on: self-hosted
+    steps:
+      - name: Sync games from Google Drive
+        run: |
+          rclone sync gdrive: /srv/redesigned-winner/games/ --delete-during
