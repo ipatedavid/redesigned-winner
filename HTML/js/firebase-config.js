@@ -4,7 +4,7 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth
 
 // Configurația ta Firebase (înlocuiește cu datele tale)
 const firebaseConfig = {
-    apiKey: "AIzaSyCVq2LZ3af2J5fSPUMfs8K53g4m5X7tLqY",
+    apiKey: ${{ vars.FIREBASE_APIKEY }},
     authDomain: "kwdt-8319d.firebaseapp.com",
     projectId: "kwdt-8319d",
     storageBucket: "kwdt-8319d.firebasestorage.app",
@@ -16,5 +16,6 @@ const firebaseConfig = {
 // Inițializează Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+
 
 export { auth };
