@@ -8,33 +8,27 @@
     <!-- Bootstrap pentru layout -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Iconițe (play, search, etc.) -->
+    <!-- Iconițe -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
-        /* Stil general pagină */
+        /* Stilurile tale existente (le-am păstrat exact) */
         body {
             background: #0a0c0f;
             color: #e0e0e0;
             font-family: 'Segoe UI', system-ui, sans-serif;
         }
-
-        /* Bara de sus */
         .navbar {
             background: rgba(20, 22, 27, 0.95) !important;
             backdrop-filter: blur(8px);
             border-bottom: 1px solid #2c2f36;
             box-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
-
-        /* Logo / titlu navbar */
         .navbar-brand {
             font-weight: 600;
             color: #fff !important;
             letter-spacing: 0.5px;
         }
-
-        /* Sidebar stânga */
         .sidebar {
             background: #16181f;
             border-radius: 16px;
@@ -44,8 +38,6 @@
             position: sticky;
             top: 20px;
         }
-
-        /* Elementele din sidebar */
         .sidebar .list-unstyled li {
             padding: 10px 16px;
             border-radius: 12px;
@@ -54,21 +46,15 @@
             font-weight: 500;
             cursor: pointer;
         }
-
-        /* Hover pe sidebar */
         .sidebar .list-unstyled li:hover {
             background: #2c2f36;
             color: #fff;
             transform: translateX(5px);
         }
-
-        /* Iconițe din sidebar */
         .sidebar .list-unstyled li i {
             width: 24px;
             color: #ff8c42;
         }
-
-        /* Container pentru search */
         .search-wrapper {
             background: #1e2128;
             border-radius: 40px;
@@ -76,14 +62,10 @@
             border: 1px solid #333842;
             transition: all 0.2s;
         }
-
-        /* Evidențiere search la focus */
         .search-wrapper:focus-within {
             border-color: #ff8c42;
             box-shadow: 0 0 0 3px rgba(255, 140, 66, 0.2);
         }
-
-        /* Inputul de căutare */
         .search-wrapper input {
             background: transparent;
             border: none;
@@ -92,14 +74,10 @@
             width: 220px;
             padding: 8px 0;
         }
-
-        /* Placeholder input */
         .search-wrapper input::placeholder {
             color: #7e8596;
             font-weight: 300;
         }
-
-        /* Butonul de căutare */
         .search-wrapper button {
             background: #ff8c42;
             border: none;
@@ -109,14 +87,10 @@
             font-weight: 600;
             transition: 0.2s;
         }
-
-        /* Hover pe buton search */
         .search-wrapper button:hover {
             background: #ffa25b;
             transform: scale(1.02);
         }
-
-        /* Card joc */
         .game-card {
             background: #1a1d26;
             border: 1px solid #2c2f36;
@@ -127,45 +101,33 @@
             display: flex;
             flex-direction: column;
         }
-
-        /* Efect hover card */
         .game-card:hover {
             transform: translateY(-6px);
             box-shadow: 0 20px 25px -10px rgba(0,0,0,0.8), 0 0 0 1px #ff8c42 inset;
             border-color: #ff8c42;
         }
-
-        /* Imagine joc */
         .game-card .card-img-top {
             height: 160px;
             object-fit: cover;
             background: #0f1117;
         }
-
-        /* Conținut card */
         .game-card .card-body {
             padding: 1.2rem;
             display: flex;
             flex-direction: column;
             flex: 1;
         }
-
-        /* Titlu joc */
         .game-card .card-title {
             color: #fff;
             font-weight: 600;
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
         }
-
-        /* Descriere joc */
         .game-card .card-text {
             color: #9ca3af;
             font-size: 0.9rem;
             flex-grow: 1;
         }
-
-        /* Butonul Joacă */
         .btn-play {
             background: transparent;
             border: 2px solid #ff8c42;
@@ -179,15 +141,11 @@
             font-size: 0.85rem;
             width: 100%;
         }
-
-        /* Hover buton Joacă */
         .btn-play:hover {
             background: #ff8c42;
             color: #0a0c0f;
             border-color: #ff8c42;
         }
-
-        /* Card pentru jocuri recente */
         .recent-card {
             background: #1a1d26;
             border: 1px solid #2c2f36;
@@ -196,33 +154,23 @@
             overflow: hidden;
             height: 100%;
         }
-
-        /* Hover card recent */
         .recent-card:hover {
             transform: translateY(-4px);
             border-color: #ff8c42;
         }
-
-        /* Conținut card recent */
         .recent-card .card-body {
             padding: 0.8rem;
         }
-
-        /* Titlu recent */
         .recent-card .card-title {
             color: #fff;
             font-size: 1rem;
             font-weight: 600;
             margin-bottom: 0.25rem;
         }
-
-        /* Text recent */
         .recent-card .card-text {
             color: #9ca3af;
             font-size: 0.75rem;
         }
-
-        /* Buton mic Joacă (recent) */
         .recent-card .btn-sm {
             background: transparent;
             border: 1px solid #ff8c42;
@@ -231,14 +179,10 @@
             font-size: 0.7rem;
             padding: 4px 10px;
         }
-
-        /* Hover buton mic */
         .recent-card .btn-sm:hover {
             background: #ff8c42;
             color: #0a0c0f;
         }
-
-        /* Titluri de secțiuni */
         .section-title {
             font-size: 1.5rem;
             font-weight: 600;
@@ -247,8 +191,6 @@
             border-left: 4px solid #ff8c42;
             padding-left: 1rem;
         }
-
-        /* Placeholder pentru imagini lipsă */
         .placeholder-img {
             width: 100%;
             height: 160px;
@@ -258,26 +200,19 @@
             background: #0f1117;
             color: #3a3f4b;
         }
-
-        /* Scrollbar custom */
         ::-webkit-scrollbar {
             width: 8px;
         }
-
         ::-webkit-scrollbar-track {
             background: #16181f;
         }
-
         ::-webkit-scrollbar-thumb {
             background: #3a3f4b;
             border-radius: 8px;
         }
-
         ::-webkit-scrollbar-thumb:hover {
             background: #ff8c42;
         }
-
-        /* Container spinner încărcare */
         .spinner-container {
             display: flex;
             justify-content: center;
@@ -285,15 +220,11 @@
             min-height: 300px;
             grid-column: 1 / -1;
         }
-
-        /* Spinner loading */
         .lds-dual-ring {
             display: inline-block;
             width: 60px;
             height: 60px;
         }
-
-        /* Cerc animat */
         .lds-dual-ring:after {
             content: " ";
             display: block;
@@ -305,55 +236,28 @@
             border-color: #ff8c42 transparent #ff8c42 transparent;
             animation: lds-dual-ring 1.2s linear infinite;
         }
-
-        /* Animația spinner */
         @keyframes lds-dual-ring {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        .favorite-btn {
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            padding: 0 8px 0 0;
+            transition: transform 0.2s;
+        }
+        .favorite-btn:hover {
+            transform: scale(1.1);
+        }
+        .favorite-btn.text-danger i {
+            color: #ff4d4d;
+        }
+        .favorite-btn.text-secondary i {
+            color: #6c757d;
+        }
     </style>
 </head>
-
-<script type="module">
-    import { auth } from './js/firebase-config.js';
-    import { onAuthStateChange, logout } from './js/auth.js';
-
-    const userSection = document.getElementById('user-section');
-
-    function updateUserSection(user) {
-        if (user) {
-            // Utilizator autentificat
-            userSection.innerHTML = `
-                <span class="text-light me-3">
-                    <i class="fa-regular fa-circle-user me-1"></i>${user.email}
-                </span>
-                <button class="btn btn-outline-secondary" id="logoutBtn">
-                    <i class="fa-solid fa-sign-out-alt me-2"></i>Logout
-                </button>
-            `;
-            document.getElementById('logoutBtn').addEventListener('click', async () => {
-                await logout();
-                // După logout, pagina se reîncarcă sau rămâne; onAuthStateChange va actualiza automat
-            });
-        } else {
-            // Utilizator neautentificat
-            userSection.innerHTML = `
-                <a href="login.html" class="btn btn-play me-2" style="width: auto; padding: 8px 20px;">
-    <i class="fa-solid fa-sign-in-alt me-2"></i>Login
-</a>
-                <a href="register.html" class="btn btn-play" style="width: auto; padding: 8px 20px;">
-                    <i class="fa-regular fa-circle-play me-2"></i>Register
-                </a>
-            `;
-        }
-    }
-
-    // Ascultă modificările stării de autentificare
-    onAuthStateChange((user) => {
-        updateUserSection(user);
-    });
-</script>
-
 <body data-bs-theme="dark">
 
 <!-- Navbar principal -->
@@ -363,7 +267,7 @@
             <i class="fa-solid fa-gamepad me-2" style="color: #ff8c42;"></i>Game Hub
         </a>
 
-        <!-- Buton de căutare existent -->
+        <!-- Buton de căutare -->
         <div class="d-flex">
             <div class="search-wrapper d-flex align-items-center">
                 <input type="text" id="searchInput" placeholder="Caută un joc...">
@@ -394,23 +298,17 @@
                     <li id="btn-recent" class="mb-2">
                         <i class="fa-solid fa-clock me-2"></i> Recente
                     </li>
+                    <li id="btn-favorites" class="mb-2">
+                        <i class="fa-solid fa-heart me-2"></i> Favorite
+                    </li>
                 </ul>
             </div>
         </div>
 
         <!-- Zona principală -->
         <div class="col-lg-10 col-md-9">
-
-            <!-- Jocuri jucate recent -->
-            <div id="recent-section" style="display: none;" class="mb-5">
-                <h2 class="section-title">
-                    <i class="fa-regular fa-clock me-2"></i>Jucate recent
-                </h2>
-                <div class="row row-cols-2 row-cols-md-4 g-3" id="recent-games-container"></div>
-            </div>
-
-            <!-- Lista tuturor jocurilor -->
-            <h2 class="section-title">
+            <!-- Lista principală de jocuri -->
+            <h2 class="section-title" id="main-section-title">
                 <i class="fa-solid fa-crown me-2"></i>Toate jocurile
             </h2>
 
@@ -419,184 +317,283 @@
                     <div class="lds-dual-ring"></div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", async () => {
+<!-- Script unificat (modul) -->
+<script type="module">
+    // 1. Importuri Firebase
+    import { auth } from './js/firebase-config.js';
+    import { onAuthStateChange, logout } from './js/auth.js';
+    import { db } from './js/firebase-config.js';
+    import { doc, getDoc, setDoc, updateDoc, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // Containerul de carduri
-        const container = document.getElementById("game-cards-container");
+    // 2. Variabile globale
+    let currentUser = null;
+    let userFavorites = new Set(); // ID-urile jocurilor favorite
+    let allGames = [];             // Toate jocurile încărcate
+    let currentFilter = 'all';      // 'all', 'recent', 'favorites'
 
-        // Elemente pentru search
-        const searchInput = document.getElementById("searchInput");
-        const searchBtn = document.getElementById("searchBtn");
+    // 3. Referințe către elemente DOM
+    const userSection = document.getElementById('user-section');
+    const container = document.getElementById('game-cards-container');
+    const searchInput = document.getElementById('searchInput');
+    const searchBtn = document.getElementById('searchBtn');
+    const mainSectionTitle = document.getElementById('main-section-title');
+    const btnHome = document.getElementById('btn-home');
+    const btnExplore = document.getElementById('btn-explore');
+    const btnRecent = document.getElementById('btn-recent');
+    const btnFavorites = document.getElementById('btn-favorites');
 
-        // Container pentru jocuri recente
-        const recentContainer = document.getElementById("recent-games-container");
-        const recentSection = document.getElementById("recent-section");
+    // 4. Funcție pentru actualizarea secțiunii utilizator (login/logout)
+    function updateUserSection(user) {
+        if (user) {
+            userSection.innerHTML = `
+                <span class="text-light me-3">
+                    <i class="fa-regular fa-circle-user me-1"></i>${user.email}
+                </span>
+                <button class="btn btn-outline-secondary" id="logoutBtn">
+                    <i class="fa-solid fa-sign-out-alt me-2"></i>Logout
+                </button>
+            `;
+            document.getElementById('logoutBtn').addEventListener('click', async () => {
+                await logout();
+            });
+        } else {
+            userSection.innerHTML = `
+                <a href="login.html" class="btn btn-play me-2" style="width: auto; padding: 8px 20px;">
+                    <i class="fa-solid fa-sign-in-alt me-2"></i>Login
+                </a>
+                <a href="register.html" class="btn btn-play" style="width: auto; padding: 8px 20px;">
+                    <i class="fa-regular fa-circle-play me-2"></i>Register
+                </a>
+            `;
+        }
+    }
 
-        // Lista completă de jocuri
-        let allGames = [];
-
+    // 5. Încărcarea favoritelelor din Firestore
+    async function loadUserFavorites(uid) {
         try {
-            // Cere lista de jocuri de la server
-            const response = await fetch("/api/games");
-            allGames = await response.json();
-
-            // Dacă nu există jocuri
-            if (!allGames.length) {
-                container.innerHTML =
-                    "<p class='text-center text-muted'>Nu există jocuri momentan.</p>";
-                return;
+            const favRef = doc(db, 'favorites', uid);
+            const favSnap = await getDoc(favRef);
+            if (favSnap.exists()) {
+                userFavorites = new Set(favSnap.data().gameIds || []);
+            } else {
+                await setDoc(favRef, { gameIds: [] });
+                userFavorites.clear();
             }
+        } catch (error) {
+            console.error('Eroare la încărcarea favoritelelor:', error);
+        }
+    }
 
-            renderGames(allGames);
-            loadRecentGames();
+    // 6. Funcție pentru toggle favorite
+    async function toggleFavorite(gameId) {
+        if (!currentUser) {
+            alert('Trebuie să fii autentificat pentru a adăuga la favorite.');
+            return;
+        }
+        const uid = currentUser.uid;
+        const favRef = doc(db, 'favorites', uid);
+        try {
+            if (userFavorites.has(gameId)) {
+                await updateDoc(favRef, {
+                    gameIds: arrayRemove(gameId)
+                });
+                userFavorites.delete(gameId);
+            } else {
+                await updateDoc(favRef, {
+                    gameIds: arrayUnion(gameId)
+                });
+                userFavorites.add(gameId);
+            }
+            // Reafișează în funcție de filtrul curent
+            renderFilteredGames();
+        } catch (error) {
+            console.error('Eroare la actualizarea favoritelelor:', error);
+        }
+    }
 
-        } catch (e) {
-            // Eroare la încărcare
-            console.error(e);
-            container.innerHTML =
-                "<p class='text-danger text-center'><i class='fa-solid fa-triangle-exclamation me-2'></i>Eroare la încărcare.</p>";
+    // 7. Funcția principală de randare carduri
+    function renderGames(gamesArray) {
+        if (!gamesArray.length) {
+            container.innerHTML = '<p class="text-center text-muted">Niciun joc de afișat.</p>';
+            return;
         }
 
-        // Construiește cardurile pentru jocuri
-        function renderGames(gamesArray) {
+        let html = '';
+        gamesArray.forEach(game => {
+            const isFav = userFavorites.has(game.id);
+            const favoriteIcon = isFav ? 'fa-solid fa-heart' : 'fa-regular fa-heart';
+            const favoriteColor = isFav ? 'text-danger' : 'text-secondary';
 
-            if (!gamesArray.length) {
-                container.innerHTML =
-                    "<p class='text-center text-muted'>Niciun joc nu corespunde căutării.</p>";
-                return;
-            }
+            const description = game.description
+                ? (game.description.length > 80 ? game.description.substring(0, 80) + '…' : game.description)
+                : '<span class="fst-italic text-muted">Descriere lipsă</span>';
 
-            let html = "";
+            const imageHtml = game.imageUrl
+                ? `<img src="${game.imageUrl}" class="card-img-top" alt="${game.title}">`
+                : `<div class="placeholder-img"><i class="fa-solid fa-image fa-3x"></i></div>`;
 
-            gamesArray.forEach(game => {
-
-                // Taie descrierea la max 80 caractere
-                const description = game.description
-                    ? game.description.length > 80
-                        ? game.description.substring(0, 80) + "…"
-                        : game.description
-                    : '<span class="fst-italic text-muted">Description not found</span>';
-
-                // Imagine joc sau placeholder
-                const imageHtml = game.imageUrl
-                    ? `<img src="${game.imageUrl}" class="card-img-top" alt="${game.title}">`
-                    : `<div class="placeholder-img"><i class="fa-solid fa-image fa-3x"></i></div>`;
-
-                html += `
+            html += `
                 <div class="col">
                     <div class="game-card">
                         ${imageHtml}
                         <div class="card-body">
                             <h5 class="card-title">${escapeHtml(game.title)}</h5>
                             <p class="card-text">${description}</p>
-                            <a href="game.html?id=${game.id}" class="btn btn-play mt-auto">
-                                <i class="fa-regular fa-circle-play me-2"></i>Joacă
-                            </a>
+                            <div class="d-flex align-items-center mt-2">
+                                <button class="favorite-btn ${favoriteColor}" data-game-id="${game.id}">
+                                    <i class="${favoriteIcon}"></i>
+                                </button>
+                                <a href="game.html?id=${game.id}" class="btn btn-play flex-grow-1 ms-2">
+                                    <i class="fa-regular fa-circle-play me-2"></i>Joacă
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                `;
+            `;
+        });
+
+        container.innerHTML = html;
+
+        // Atașăm evenimente pentru butoanele de favorite
+        document.querySelectorAll('.favorite-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const gameId = btn.dataset.gameId;
+                toggleFavorite(gameId);
             });
+        });
+    }
 
-            container.innerHTML = html;
+    // 8. Funcție care returnează jocurile în funcție de filtrul curent
+    function getFilteredGames() {
+        if (currentFilter === 'all') {
+            return allGames;
+        } else if (currentFilter === 'favorites') {
+            if (!currentUser) {
+                alert('Autentifică-te pentru a vedea favoritele.');
+                currentFilter = 'all'; // revenim la all
+                updateSectionTitle();
+                return allGames;
+            }
+            const favGames = allGames.filter(game => userFavorites.has(game.id));
+            return favGames;
+        } else if (currentFilter === 'recent') {
+            const recent = JSON.parse(localStorage.getItem('recentGames')) || [];
+            // Filtrăm doar jocurile care există în allGames (să avem toate detaliile)
+            const recentGames = allGames.filter(game => recent.some(r => r.id === game.id));
+            return recentGames;
         }
+        return allGames;
+    }
 
-        // Încarcă jocurile recente din localStorage
-        function loadRecentGames() {
+    // 9. Actualizează titlul secțiunii principale
+    function updateSectionTitle() {
+        if (currentFilter === 'all') {
+            mainSectionTitle.innerHTML = '<i class="fa-solid fa-crown me-2"></i>Toate jocurile';
+        } else if (currentFilter === 'favorites') {
+            mainSectionTitle.innerHTML = '<i class="fa-solid fa-heart me-2" style="color: #ff4d4d;"></i>Jocurile favorite';
+        } else if (currentFilter === 'recent') {
+            mainSectionTitle.innerHTML = '<i class="fa-solid fa-clock me-2"></i>Jucate recent';
+        }
+    }
 
-            const recent = JSON.parse(localStorage.getItem("recentGames")) || [];
+    // 10. Reafișează jocurile conform filtrului curent
+    function renderFilteredGames() {
+        const gamesToShow = getFilteredGames();
+        renderGames(gamesToShow);
+        updateSectionTitle();
+    }
 
-            if (recent.length === 0) {
-                recentSection.style.display = "none";
+    // 11. Funcție de filtrare după text (căutare)
+    function filterGames() {
+        const term = searchInput.value.trim().toLowerCase();
+        if (term === '') {
+            renderFilteredGames();
+        } else {
+            const filtered = allGames.filter(game => game.title.toLowerCase().includes(term));
+            renderGames(filtered);
+        }
+    }
+
+    // 12. Escaping pentru XSS
+    function escapeHtml(unsafe) {
+        return unsafe.replace(/[&<>"']/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            if (m === '"') return '&quot;';
+            if (m === "'") return '&#039;';
+            return m;
+        });
+    }
+
+    // 13. Ascultător pentru schimbarea stării de autentificare
+    onAuthStateChange(async (user) => {
+        currentUser = user;
+        updateUserSection(user);
+        if (user) {
+            await loadUserFavorites(user.uid);
+        } else {
+            userFavorites.clear();
+        }
+        // Dacă filtrul curent era 'favorites' și utilizatorul s-a delogat, revenim la 'all'
+        if (currentFilter === 'favorites' && !user) {
+            currentFilter = 'all';
+        }
+        renderFilteredGames();
+    });
+
+    // 14. Inițializare la încărcarea paginii
+    document.addEventListener('DOMContentLoaded', async () => {
+        try {
+            const response = await fetch('/api/games');
+            allGames = await response.json();
+            if (!allGames.length) {
+                container.innerHTML = '<p class="text-center text-muted">Nu există jocuri momentan.</p>';
                 return;
             }
-
-            recentSection.style.display = "block";
-
-            let html = "";
-
-            recent.forEach(game => {
-
-                // Imagine recent sau placeholder SVG
-                const imgSrc = game.imageUrl || 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22150%22%20height%3D%22120%22%20viewBox%3D%220%200%20150%20120%22%3E%3Crect%20width%3D%22150%22%20height%3D%22120%22%20fill%3D%22%232c2f36%22%2F%3E%3Ctext%20x%3D%2275%22%20y%3D%2260%22%20fill%3D%22%239ca3af%22%20font-size%3D%2212%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3ENo image%3C%2Ftext%3E%3C%2Fsvg%3E';
-
-                html += `
-                <div class="col">
-                    <div class="recent-card">
-                        <img src="${imgSrc}" class="card-img-top" alt="${game.title}" style="height: 120px; object-fit: cover;">
-                        <div class="card-body">
-                            <h6 class="card-title">${escapeHtml(game.title)}</h6>
-                            <a href="game.html?id=${game.id}" class="btn btn-sm btn-play mt-2">Joacă</a>
-                        </div>
-                    </div>
-                </div>
-                `;
-            });
-
-            recentContainer.innerHTML = html;
+            // Afișăm toate jocurile (implicit)
+            renderFilteredGames();
+        } catch (e) {
+            console.error(e);
+            container.innerHTML = '<p class="text-danger text-center"><i class="fa-solid fa-triangle-exclamation me-2"></i>Eroare la încărcare.</p>';
         }
 
-        // Escape pentru XSS în titlu
-        function escapeHtml(unsafe) {
-            return unsafe.replace(/[&<>"']/g, function(m) {
-                if (m === "&") return "&amp;";
-                if (m === "<") return "&lt;";
-                if (m === ">") return "&gt;";
-                if (m === '"') return "&quot;";
-                if (m === "'") return "&#039;";
-                return m;
-            });
-        }
+        // Evenimente căutare
+        searchInput.addEventListener('input', filterGames);
+        searchBtn.addEventListener('click', filterGames);
 
-        // Filtrare jocuri după text
-        function filterGames() {
-            const term = searchInput.value.trim().toLowerCase();
-
-            if (term === "") {
-                renderGames(allGames);
-            } else {
-                const filtered = allGames.filter(game =>
-                    game.title.toLowerCase().includes(term)
-                );
-                renderGames(filtered);
-            }
-        }
-
-        // Evenimente search
-        searchInput.addEventListener("input", filterGames);
-        searchBtn.addEventListener("click", filterGames);
-
-        // Scroll la început
-        document.getElementById("btn-home").addEventListener("click", () => {
-            window.scrollTo({ top: 0, behavior: "smooth" });
+        // Evenimente sidebar
+        btnHome.addEventListener('click', () => {
+            currentFilter = 'all';
+            renderFilteredGames();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // Deschide un joc aleator
-        document.getElementById("btn-explore").addEventListener("click", () => {
+        btnExplore.addEventListener('click', () => {
             if (allGames.length > 0) {
                 const randomIndex = Math.floor(Math.random() * allGames.length);
-                const randomGame = allGames[randomIndex];
-                location.href = `game.html?id=${randomGame.id}`;
+                location.href = `game.html?id=${allGames[randomIndex].id}`;
             } else {
-                alert("Nu există jocuri disponibile.");
+                alert('Nu există jocuri disponibile.');
             }
         });
 
-        // Scroll la secțiunea recent
-        document.getElementById("btn-recent").addEventListener("click", () => {
-            const recent = JSON.parse(localStorage.getItem("recentGames")) || [];
-            if (recent.length > 0) {
-                document.getElementById("recent-section")
-                    .scrollIntoView({ behavior: "smooth" });
-            } else {
-                alert("Nu ai jucat încă niciun joc.");
-            }
+        btnRecent.addEventListener('click', () => {
+            currentFilter = 'recent';
+            renderFilteredGames();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        btnFavorites.addEventListener('click', () => {
+            currentFilter = 'favorites';
+            renderFilteredGames();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     });
 </script>

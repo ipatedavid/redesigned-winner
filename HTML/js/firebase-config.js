@@ -1,6 +1,8 @@
 // Importă funcțiile necesare din SDK-urile Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+// 1. Adaugă importul pentru Firestore
+import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 // Configurația ta Firebase (înlocuiește cu datele tale)
 const firebaseConfig = {
@@ -16,7 +18,8 @@ const firebaseConfig = {
 // Inițializează Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+// 2. Inițializează Firestore
+const db = getFirestore(app);
 
-
-export { auth };
-
+// 3. Exportă ambele instanțe (auth și db)
+export { auth, db };

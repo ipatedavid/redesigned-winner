@@ -139,6 +139,31 @@
             align-items: center;
             gap: 10px;
         }
+
+        /* Stil pentru butonul inimă */
+        .favorite-btn {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            padding: 0;
+            transition: transform 0.2s;
+            line-height: 1;
+        }
+        .favorite-btn:hover {
+            transform: scale(1.1);
+        }
+        .favorite-btn.text-danger i {
+            color: #ff4d4d;
+        }
+        .favorite-btn.text-secondary i {
+            color: #6c757d;
+        }
+        .game-title-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 1rem;
+        }
     </style>
 </head>
 
@@ -163,7 +188,12 @@
 
     <!-- Info joc -->
     <div id="game-info" class="mb-4">
-        <h2 class="display-6" id="game-title"></h2> <!-- Titlu joc -->
+        <div class="game-title-wrapper">
+            <h2 class="display-6 mb-0" id="game-title"></h2>
+            <button id="favorite-btn" class="favorite-btn text-secondary">
+                <i id="favorite-icon" class="fa-regular fa-heart"></i>
+            </button>
+        </div>
         <p class="text-muted" id="game-file"></p> <!-- Fișier joc (ascuns) -->
         <div id="game-description"></div> <!-- Descriere joc -->
     </div>
@@ -186,16 +216,32 @@
 <!-- Script custom joc -->
 <script src="js/game.js"></script>
 
-<!-- Script pentru autentificare -->
+<!-- Script unificat (modul) -->
 <script type="module">
-    import { auth } from './js/firebase-config.js';
+    // 1. Importuri Firebase
+    import { auth, db } from './js/firebase-config.js';
     import { onAuthStateChange, logout } from './js/auth.js';
+    import { doc, getDoc, setDoc, updateDoc, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
+    // 2. Variabile globale
+    let currentUser = null;
+    let currentGameId = null;
+    let isFavorite = false;
+
+    // 3. Referințe către elemente DOM
     const userSection = document.getElementById('user-section');
+    const favoriteBtn = document.getElementById('favorite-btn');
+    const favoriteIcon = document.getElementById('favorite-icon');
+    const gameTitleEl = document.getElementById('game-title');
+    const gameFileEl = document.getElementById('game-file');
+    const gameDescEl = document.getElementById('game-description');
+    const dosboxEl = document.getElementById('dosbox');
+    const recommendedSection = document.getElementById('recommended-section');
+    const recommendedContainer = document.getElementById('recommended-container');
 
+    // 4. Funcție pentru actualizarea secțiunii utilizator (login/logout)
     function updateUserSection(user) {
         if (user) {
-            // Utilizator autentificat
             userSection.innerHTML = `
                 <span class="text-light me-2">
                     <i class="fa-regular fa-circle-user me-1"></i>${user.email}
@@ -206,10 +252,8 @@
             `;
             document.getElementById('logoutBtn')?.addEventListener('click', async () => {
                 await logout();
-                // După logout, pagina se reîncarcă automat prin onAuthStateChange
             });
         } else {
-            // Utilizator neautentificat
             userSection.innerHTML = `
                 <a href="login.html" class="btn btn-play me-2" style="width: auto; padding: 8px 20px;">
                     <i class="fa-solid fa-sign-in-alt me-2"></i>Login
@@ -221,9 +265,149 @@
         }
     }
 
-    // Ascultă modificările stării de autentificare
-    onAuthStateChange((user) => {
+    // 5. Verifică dacă jocul curent este în favoritele utilizatorului
+    async function checkIfFavorite(uid, gameId) {
+        try {
+            const favRef = doc(db, 'favorites', uid);
+            const favSnap = await getDoc(favRef);
+            if (favSnap.exists()) {
+                const gameIds = favSnap.data().gameIds || [];
+                isFavorite = gameIds.includes(gameId);
+            } else {
+                // Creează documentul dacă nu există
+                await setDoc(favRef, { gameIds: [] });
+                isFavorite = false;
+            }
+            updateFavoriteButton(isFavorite);
+        } catch (error) {
+            console.error('Eroare la verificarea favorite:', error);
+        }
+    }
+
+    // 6. Actualizează aspectul butonului inimă
+    function updateFavoriteButton(fav) {
+        if (fav) {
+            favoriteIcon.className = 'fa-solid fa-heart';
+            favoriteBtn.classList.remove('text-secondary');
+            favoriteBtn.classList.add('text-danger');
+        } else {
+            favoriteIcon.className = 'fa-regular fa-heart';
+            favoriteBtn.classList.remove('text-danger');
+            favoriteBtn.classList.add('text-secondary');
+        }
+    }
+
+    // 7. Funcție pentru toggle favorite
+    async function toggleFavorite() {
+        if (!currentUser) {
+            alert('Trebuie să fii autentificat pentru a adăuga la favorite.');
+            return;
+        }
+        if (!currentGameId) return;
+
+        const uid = currentUser.uid;
+        const favRef = doc(db, 'favorites', uid);
+        try {
+            if (isFavorite) {
+                await updateDoc(favRef, {
+                    gameIds: arrayRemove(currentGameId)
+                });
+                isFavorite = false;
+            } else {
+                await updateDoc(favRef, {
+                    gameIds: arrayUnion(currentGameId)
+                });
+                isFavorite = true;
+            }
+            updateFavoriteButton(isFavorite);
+        } catch (error) {
+            console.error('Eroare la actualizarea favorite:', error);
+        }
+    }
+
+    // 8. Încărcare și afișare joc
+    async function loadGame() {
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+        if (!id) {
+            location.href = 'index.html';
+            return;
+        }
+        currentGameId = id;
+
+        try {
+            const res = await fetch('/api/games');
+            const games = await res.json();
+            const game = games.find(g => String(g.id) === String(id));
+            if (!game) {
+                alert('Joc inexistent');
+                location.href = 'index.html';
+                return;
+            }
+
+            // Afișează informațiile jocului
+            gameTitleEl.textContent = game.title;
+            gameFileEl.textContent = game.file;
+            if (game.description) {
+                gameDescEl.innerHTML = `<i class="fa-regular fa-file-lines me-2"></i>${escapeHtml(game.description)}`;
+            } else {
+                gameDescEl.innerHTML = '<span class="text-muted"><i class="fa-regular fa-circle-exclamation me-2"></i>Descriere lipsă</span>';
+            }
+
+            // Salvează în recente (folosind funcția din game.js - deja existentă)
+            storeRecentlyPlayed(game);
+
+            // Pornește jocul în DOSBox (folosind funcția din game.js - deja existentă)
+            startGame(game);
+
+            // Încarcă recomandările (folosind funcția din game.js - deja existentă)
+            loadRecommended(games, game);
+
+            // Verifică starea de favorite dacă utilizatorul este autentificat
+            if (currentUser) {
+                await checkIfFavorite(currentUser.uid, currentGameId);
+            } else {
+                updateFavoriteButton(false);
+            }
+        } catch (e) {
+            console.error(e);
+            gameDescEl.innerHTML = '<p class="text-danger">Eroare la încărcarea jocului.</p>';
+        }
+    }
+
+    // 9. Funcții de ajutor (escapeHtml, storeRecentlyPlayed, startGame, loadRecommended)
+    // Acestea sunt deja definite în js/game.js, dar le definim și aici pentru siguranță
+    function escapeHtml(unsafe) {
+        return unsafe.replace(/[&<>"']/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            if (m === '"') return '&quot;';
+            if (m === "'") return '&#039;';
+            return m;
+        });
+    }
+
+    // Notă: Funcțiile storeRecentlyPlayed, startGame și loadRecommended sunt deja în game.js
+    // și vor fi apelate mai sus. Le lăsăm așa cum sunt în fișierul extern.
+
+    // 10. Ascultător pentru schimbarea stării de autentificare
+    onAuthStateChange(async (user) => {
+        currentUser = user;
         updateUserSection(user);
+        if (user && currentGameId) {
+            await checkIfFavorite(user.uid, currentGameId);
+        } else {
+            updateFavoriteButton(false);
+        }
+    });
+
+    // 11. Inițializare la încărcarea paginii
+    document.addEventListener('DOMContentLoaded', () => {
+        loadGame();
+
+        // Eveniment click pe butonul de favorite
+        favoriteBtn.addEventListener('click', toggleFavorite);
     });
 </script>
 
