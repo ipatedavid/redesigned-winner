@@ -5,83 +5,79 @@ const path = require("path");
 const app = express();
 const PORT = 3000;
 
-// Folderul unde se află jocurile
 const GAMES_DIR = path.join(__dirname, "games");
 
-// ✅ API routes FIRST
+// Platforme suportate (directoarele din games/)
+const PLATFORMS = ['dos', 'gba', 'snes', 'nes']; // poți adăuga oricâte
+
 app.get("/api/games", async (req, res) => {
     try {
-        // Citește toate intrările din folderul games
-        const entries = await fs.promises.readdir(GAMES_DIR, { withFileTypes: true });
         const games = [];
 
-        for (const entry of entries) {
+        // Pentru fiecare platformă
+        for (const platform of PLATFORMS) {
+            const platformPath = path.join(GAMES_DIR, platform);
+            
+            // Verifică dacă directorul platformei există
+            if (!fs.existsSync(platformPath)) continue;
 
-            // Acceptă doar foldere (un folder = un joc)
-            if (!entry.isDirectory()) continue;
+            const entries = await fs.promises.readdir(platformPath, { withFileTypes: true });
 
-            const folderPath = path.join(GAMES_DIR, entry.name);
-            const files = await fs.promises.readdir(folderPath);
+            for (const entry of entries) {
+                if (!entry.isDirectory()) continue;
 
-            // Caută fișierul zip al jocului
-            const zipFile = files.find(f => f.toLowerCase().endsWith(".zip"));
-            if (!zipFile) continue;
+                const gameFolderPath = path.join(platformPath, entry.name);
+                const files = await fs.promises.readdir(gameFolderPath);
 
-            // Caută fișierul de descriere
-            let description = null;
-            const descFile = files.find(f =>
-                f.toLowerCase() === "descriere.txt" ||
-                f.toLowerCase() === "description.txt"
-            );
+                // Caută un fișier ROM (acceptăm mai multe extensii)
+                const romExtensions = ['.zip', '.gba', '.smc', '.sfc', '.nes', '.gb', '.gbc', '.n64', '.z64', '.v64'];
+                const romFile = files.find(f => {
+                    const ext = path.extname(f).toLowerCase();
+                    return romExtensions.includes(ext);
+                });
+                if (!romFile) continue; // dacă nu găsim niciun ROM, sărim peste
 
-            // Citește descrierea din fișier
-            if (descFile) {
-                description = (await fs.promises.readFile(
-                    path.join(folderPath, descFile),
-                    "utf8"
-                )).trim();
+                // Caută descriere
+                let description = null;
+                const descFile = files.find(f =>
+                    f.toLowerCase() === "descriere.txt" ||
+                    f.toLowerCase() === "description.txt"
+                );
+                if (descFile) {
+                    description = (await fs.promises.readFile(
+                        path.join(gameFolderPath, descFile),
+                        "utf8"
+                    )).trim();
+                }
+
+                // Caută o imagine
+                const imageExtensions = [".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp"];
+                const imageFile = files.find(f => imageExtensions.includes(path.extname(f).toLowerCase()));
+                const imageUrl = imageFile ? `/games/${platform}/${entry.name}/${imageFile}` : null;
+
+                games.push({
+                    id: `${platform}-${entry.name}`, // ID unic
+                    title: entry.name,
+                    file: romFile,
+                    zip: `/games/${platform}/${entry.name}/${romFile}`,
+                    description: description,
+                    imageUrl: imageUrl,
+                    platform: platform // foarte important!
+                });
             }
-
-            // Caută o imagine pentru joc
-            const imageExtensions = [".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp"];
-            const imageFile = files.find(f => {
-                const ext = path.extname(f).toLowerCase();
-                return imageExtensions.includes(ext);
-            });
-
-            // Creează URL-ul imaginii
-            const imageUrl = imageFile
-                ? `/games/${entry.name}/${imageFile}`
-                : null;
-
-            // Obiectul trimis către frontend
-            games.push({
-                id: entry.name,
-                title: entry.name,
-                file: zipFile,
-                zip: `/games/${entry.name}/${zipFile}`,
-                description: description,
-                imageUrl: imageUrl
-            });
         }
 
-        // Trimite lista de jocuri
         res.json(games);
-
     } catch (e) {
-        // În caz de eroare trimite listă goală
         console.error(e);
         res.json([]);
     }
 });
 
-// Servește fișierele din proiect (html, css, js) - AFTER API
+// Servește fișierele statice
 app.use(express.static(__dirname));
-
-// Expune folderul games la /games - AFTER API
 app.use("/games", express.static(GAMES_DIR));
 
-// Pornește serverul
 app.listen(PORT, () => {
     console.log("Server pornit pe http://localhost:" + PORT);
 });

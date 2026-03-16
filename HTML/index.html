@@ -256,6 +256,18 @@
         .favorite-btn.text-secondary i {
             color: #6c757d;
         }
+
+        .platform-icon {
+            display: inline-block;
+            margin-right: 8px;
+            font-size: 1.2rem;
+            vertical-align: middle;
+        }
+        .game-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
     </style>
 </head>
 <body data-bs-theme="dark">
@@ -415,7 +427,7 @@
         }
     }
 
-    // 7. Funcția principală de randare carduri
+    // 7. Funcția principală de randare carduri (MODIFICATĂ pentru a suporta ambele tipuri de jocuri)
     function renderGames(gamesArray) {
         if (!gamesArray.length) {
             container.innerHTML = '<p class="text-center text-muted">Niciun joc de afișat.</p>';
@@ -436,6 +448,12 @@
                 ? `<img src="${game.imageUrl}" class="card-img-top" alt="${game.title}">`
                 : `<div class="placeholder-img"><i class="fa-solid fa-image fa-3x"></i></div>`;
 
+            // Determinăm linkul corect în funcție de platformă
+            // Presupunem că serverul returnează un câmp "platform" cu valori precum 'dos', 'gba', 'snes', 'nes' etc.
+            const gameLink = game.platform === 'dos'
+                ? `game.html?id=${game.id}`
+                : `emulator.html?id=${game.id}&core=${game.platform}&rom=${encodeURIComponent(game.zip)}&title=${encodeURIComponent(game.title)}`;
+
             html += `
                 <div class="col">
                     <div class="game-card">
@@ -447,7 +465,7 @@
                                 <button class="favorite-btn ${favoriteColor}" data-game-id="${game.id}">
                                     <i class="${favoriteIcon}"></i>
                                 </button>
-                                <a href="game.html?id=${game.id}" class="btn btn-play flex-grow-1 ms-2">
+                                <a href="${gameLink}" class="btn btn-play flex-grow-1 ms-2">
                                     <i class="fa-regular fa-circle-play me-2"></i>Joacă
                                 </a>
                             </div>
@@ -597,6 +615,5 @@
         });
     });
 </script>
-
 </body>
 </html>
